@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.js"
+        integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+
+    <!-- moment.js -->
+    <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/5.8.5/firebase-app.js"></script>
+    <!-- Add additional services that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/5.8.5/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.8.5/firebase-database.js"></script>
+    <!-- <script src="https://www.gstatic.com/firebasejs/5.8.5/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.8.5/firebase-messaging.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.8.5/firebase-functions.js"></script> -->
+
+    <style>
+        /* OUTLINE BORDERS */
+        /* div {
+            border: solid black 1px;
+        } */
+    </style>
+</head>
+
+<body>
+    <!-- BODY GOES HERE -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <!-- Add train  -->
+                <div class="card mb-4">
+                    <div class="card-header font-weight-bold">Flight Options</div>
+                    <div class="card-body">
+
+                        <!-- Entry Form -->
+                        <form>
+                            <div class="form-group">
+                                <label for="depart-city">Depart From</label>
+                                <input class="form-control" id="depart-city" placeholder="BNA" type="text">
+                            </div>
+                            <div class="form-group">
+                                <label for="arrive-city">Arrive At</label>
+                                <input class="form-control" id="arrive-city" placeholder="Nashville" type="text">
+                            </div>
+                            <div class="form-group">
+                                <label for="date-input">Date</label>
+                                <input class="form-control" id="date-input" placeholder="MM/DD/YYYY" type="text">
+                            </div>
+                            <div class="form-group">
+                                <label for="frequency-input">Frequency (min)</label>
+                                <input class="form-control" id="frequency-input" placeholder="25" type="text">
+                            </div>
+                            <button class="btn btn-primary btn-block" id="add-train-btn">Submit</button>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <button class="btn btn-primary search-btn" type="submit">SEARCH</button>
+        <div id="display-area"></div>
+    </div>
+
+
+
+
+
+
+    <!-- ////////////// -->
+
+    <!-- Javascript for bootstrap -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+        integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+        integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+        crossorigin="anonymous"></script>
+    <!-- ////////////// -->
+
+    <!-- CODE GOES HERE -->
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyC4jU3Rp6zvHA7Srnzj9ueT2rD6dbwMuVo",
+            authDomain: "testproject-1abc2.firebaseapp.com",
+            databaseURL: "https://testproject-1abc2.firebaseio.com",
+            projectId: "testproject-1abc2",
+            storageBucket: "testproject-1abc2.appspot.com",
+            messagingSenderId: "463399312243"
+        };
+        firebase.initializeApp(config);
+
+        var db = firebase.database()
+
+
+        // CONNECT TO FLIGHT API
+
+        $(document).on("click", ".search-btn", function () {
+            var settings = {
+                "async": true,
+                "crossDomain": true,
+                "url": "https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/pricing/v1.0",
+                "method": "POST",
+                "headers": {
+                    "X-RapidAPI-Key": "70b4bd87d4msh46110c5b4e371f1p11eccbjsn8595807c8dfe",
+                    "Content-Type": "application/x-www-form-urlencoded",
+                    // "cache-control": "no-cache",
+                    // "Postman-Token": "7c908061-b400-4b2b-9068-a1c8409468a1"
+                },
+                "data": {
+                    "country": "US",
+                    "currency": "USD",
+                    "locale": "en-US",
+                    "originPlace": "SFO-sky",
+                    "destinationPlace": "LHR-sky",
+                    "outboundDate": "2019-04-01",
+                    "adults": "1"
+                }
+            }
+
+            $.ajax(settings).done(function (response) {
+                console.log(response);
+            });
+        });
+    </script>
+    <!-- ////////////// -->
+
+</body>
+
+</html>
