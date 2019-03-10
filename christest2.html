@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.js"
+        integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+
+    <!-- moment.js -->
+    <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/5.8.5/firebase-app.js"></script>
+    <!-- Add additional services that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/5.8.5/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.8.5/firebase-database.js"></script>
+    <!-- <script src="https://www.gstatic.com/firebasejs/5.8.5/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.8.5/firebase-messaging.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.8.5/firebase-functions.js"></script> -->
+
+    <style>
+        /* OUTLINE BORDERS */
+        /* div {
+            border: solid black 1px;
+        } */
+    </style>
+</head>
+
+<body>
+    <!-- BODY GOES HERE -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <!-- Add train  -->
+                <div class="card mb-4">
+                    <div class="card-header font-weight-bold">Flight Options</div>
+                    <div class="card-body">
+
+                        <!-- Entry Form -->
+                        <form>
+                            <div class="form-group">
+                                <label for="depart-city">Depart From</label>
+                                <input class="form-control" id="depart-city" placeholder="BNA" type="text">
+                            </div>
+                            <div class="form-group">
+                                <label for="arrive-city">Arrive At</label>
+                                <input class="form-control" id="arrive-city" placeholder="FLL" type="text">
+                            </div>
+                            <div class="form-group">
+                                <label for="date-input">Date</label>
+                                <input class="form-control" id="date-input" placeholder="YYYY-MM-DD or YYYY-MM"
+                                    type="text">
+                            </div>
+                            <!-- <div class="form-group">
+                                <label for="frequency-input">Frequency (min)</label>
+                                <input class="form-control" id="frequency-input" placeholder="25" type="text">
+                            </div> -->
+                            <button class="btn btn-primary btn-block search-btn" id="search-flight-btn">Search
+                                flights</button>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- <button class="btn btn-primary search-btn" type="submit">SEARCH</button> -->
+        <div id="display-area"></div>
+    </div>
+
+
+
+
+
+
+    <!-- ////////////// -->
+
+    <!-- Javascript for bootstrap -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+        integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+        integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+        crossorigin="anonymous"></script>
+    <!-- ////////////// -->
+
+    <!-- CODE GOES HERE -->
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyC4jU3Rp6zvHA7Srnzj9ueT2rD6dbwMuVo",
+            authDomain: "testproject-1abc2.firebaseapp.com",
+            databaseURL: "https://testproject-1abc2.firebaseio.com",
+            projectId: "testproject-1abc2",
+            storageBucket: "testproject-1abc2.appspot.com",
+            messagingSenderId: "463399312243"
+        };
+        firebase.initializeApp(config);
+
+        var db = firebase.database()
+
+
+        // CONNECT TO FLIGHT API
+
+        $(document).on("click", ".search-btn", function () {
+
+            // prevent submit action
+            event.preventDefault();
+
+
+
+            var departCity = $("#depart-city").val().trim();
+            var arriveCity = $("#arrive-city").val().trim();
+            var departDate = $("#date-input").val().trim();
+
+
+            var settings = {
+                "async": true,
+                "crossDomain": true,
+                "url": "https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/US/USD/en-US/" + departCity + "-sky/" + arriveCity + "-sky/" + departDate,
+                "method": "GET",
+                "headers": {
+                    "X-RapidAPI-Key": "70b4bd87d4msh46110c5b4e371f1p11eccbjsn8595807c8dfe",
+                    "Content-Type": "application/x-www-form-urlencoded",
+                    "cache-control": "no-cache",
+                    "Postman-Token": "60c26db9-c8ba-43ca-aaff-ddfb24e440f2"
+                },
+                "data": ""
+            }
+
+            $.ajax(settings).done(function (result) {
+                console.log("Result", result);
+                createItin(result);
+
+            });
+        });
+
+        function createItin(result) {
+            $("#display-area").empty();
+
+
+            var quotes = result.Quotes;
+            var carriers = result.Carriers;
+            var places = result.Places;
+            console.log("Quotes", quotes);
+            console.log("Carriers", carriers);
+            console.log("Places", places);
+
+
+            for (var i = 0; i < quotes.length; i++) {
+                var currentQuote = quotes[i];
+                var newDiv = $("<div>");
+                var price = $("<div>");
+                var carrier = $("<div>");
+                var originId = $("<div>");
+                var desitinationId = $("<div>");
+                var travelDate = $("<div>");
+                var originName = lookupCity(currentQuote.OutboundLeg.OriginId, places);
+                var destinationName = lookupCity(currentQuote.OutboundLeg.DestinationId, places);
+                var carrierName = lookupCarrier(currentQuote.OutboundLeg.CarrierIds[0], carriers);
+
+
+                originId.text("From: " + originName);
+                desitinationId.text("To: " + destinationName);
+                price.text("Price: $" + currentQuote.MinPrice);
+                carrier.text("Airline: " + carrierName)
+                travelDate.text("Date: " + currentQuote.OutboundLeg.DepartureDate)
+                newDiv.append(carrier, price, originId, desitinationId, travelDate);
+                $("#display-area").append(newDiv);
+            }
+        }
+
+        function lookupCity(ID, places) {
+            for (var i = 0; i < places.length; i++) {
+                if (places[i].PlaceId === ID) {
+                    return places[i].Name
+                }
+            }
+        }
+
+        function lookupCarrier(ID, carriers) {
+            for (var i = 0; i < carriers.length; i++) {
+                if (carriers[i].CarrierId === ID) {
+                    return carriers[i].Name
+                }
+            }
+        }
+
+
+    </script>
+    <!-- ////////////// -->
+
+</body>
+
+</html>
