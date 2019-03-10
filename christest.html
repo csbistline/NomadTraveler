@@ -27,6 +27,12 @@
     <script src="https://www.gstatic.com/firebasejs/5.8.5/firebase-functions.js"></script> -->
 
     <style>
+        #flight-sked th,
+        td {
+            display: inline-block;
+            width: 20%;
+        }
+
         /* OUTLINE BORDERS */
         /* div {
             border: solid black 1px;
@@ -52,17 +58,20 @@
                             </div>
                             <div class="form-group">
                                 <label for="arrive-city">Arrive At</label>
-                                <input class="form-control" id="arrive-city" placeholder="Nashville" type="text">
+                                <input class="form-control" id="arrive-city" placeholder="FLL" type="text">
                             </div>
                             <div class="form-group">
-                                <label for="date-input">Date</label>
-                                <input class="form-control" id="date-input" placeholder="MM/DD/YYYY" type="text">
+                                <label for="depart-date">Departure Date</label>
+                                <input class="form-control" id="depart-date" placeholder="YYYY-MM-DD or YYYY-MM"
+                                    type="text">
                             </div>
                             <div class="form-group">
-                                <label for="frequency-input">Frequency (min)</label>
-                                <input class="form-control" id="frequency-input" placeholder="25" type="text">
+                                <label for="return-date">Return Date</label>
+                                <input class="form-control" id="return-date" placeholder="YYYY-MM-DD or YYYY-MM"
+                                    type="text">
                             </div>
-                            <button class="btn btn-primary btn-block" id="add-train-btn">Submit</button>
+                            <button class="btn btn-primary btn-block search-btn" id="search-quote-btn">Search
+                                flights</button>
                         </form>
 
                     </div>
@@ -71,8 +80,33 @@
         </div>
 
 
-        <button class="btn btn-primary search-btn" type="submit">SEARCH</button>
+        <!-- <button class="btn btn-primary search-btn" type="submit">SEARCH</button> -->
         <div id="display-area"></div>
+        <div class="row">
+
+            <div class="col-md-12">
+
+                <!-- Current trains-->
+                <div class="card mb-4">
+                    <div class="card-header font-weight-bold" id="flight-cities">Flights</div>
+                    <div class="card-body">
+                        <table class="table table-sm table-hover" id='flight-sked'>
+                            <thead>
+                                <tr>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Depart</th>
+                                    <th scope="col">Arrive</th>
+                                    <th scope="col">Airline</th>
+                                    <th scope="col">Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 
@@ -110,6 +144,17 @@
         // CONNECT TO FLIGHT API
 
         $(document).on("click", ".search-btn", function () {
+            // prevent submit action
+            event.preventDefault();
+
+
+            // capture user input
+            var departCity = $("#depart-city").val().trim();
+            var arriveCity = $("#arrive-city").val().trim();
+            var departDate = $("#depart-date").val().trim();
+            var returnDate = $("#return-date").val().trim();
+
+
             var settings = {
                 "async": true,
                 "crossDomain": true,
@@ -125,22 +170,19 @@
                     "country": "US",
                     "currency": "USD",
                     "locale": "en-US",
-                    "originPlace": "BNA-sky",
-                    "destinationPlace": "JFK-sky",
-                    "outboundDate": "2019-03-18",
+                    "originPlace": departCity + "-sky",
+                    "destinationPlace": arriveCity + "-sky",
+                    "outboundDate": departDate,
+                    "inboundDate": returnDate,
+                    "cabinClass": "economy",
                     "adults": "1"
                 }
             }
+            console.log(settings);
 
             $.ajax(settings).done(function (response, status, jqXHR) {
-                // console.log(response);
-                // console.log(status);
-                // console.log(jqXHR.getResponseHeader('Location'));
-
                 var loc = (jqXHR.getResponseHeader('Location')).split("/");
-                // console.log(loc);
                 var sessionkey = loc[loc.length - 1];
-                // console.log(sessionkey);
                 pollResults(sessionkey)
             });
         });
@@ -151,6 +193,7 @@
                 "async": true,
                 "crossDomain": true,
                 "url": "https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/pricing/uk2/v1.0/" + sessionkey + "?pageIndex=0&pageSize=15",
+                // "url": "https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/pricing/uk2/v1.0/" + sessionkey,
                 "method": "GET",
                 "headers": {
                     "X-RapidAPI-Key": "70b4bd87d4msh46110c5b4e371f1p11eccbjsn8595807c8dfe",
@@ -160,166 +203,111 @@
                 if (result.Itineraries <= 10) {
                     console.log("Doing it again");
                 } else {
+                    console.log(result);
 
-                    createItin(result.Itineraries);
-                    // console.log(result);
-                    // console.log(result.Itineraries);
-                    // console.log(result.Itineraries[0].PricingOptions[0].Price);
+                    createItin(result);
                 }
 
             });
         };
 
-        function createItin(itin) {
-            console.log(itin);
-            
-            for (var i = 0; i < itin.length; i++) {
-                var newDiv = $("<div>");
-                var outLeg = $("<div>");
-                // console.log(itin[i].BookingDetailsLink.OutboundLegId);
-                outLeg.text("Destination: " + itin[i].OutboundLegId);
-                var price = $("<div>");
-                price.text("Price:" + itin[i].PricingOptions[0].Price);
-                newDiv.append(outLeg, price);
-                $("#display-area").append(newDiv);
+        function createItin(result) {
+            $("#flight-sked > tbody").empty();
+
+
+            var itineraries = result.Itineraries;
+            var carriers = result.Carriers;
+            var places = result.Places;
+            var legs = result.Legs;
+
+            console.log("Itineraries", itineraries);
+            console.log("Carriers", carriers);
+            console.log("Places", places);
+            console.log("Legs", legs);
+
+
+            for (var i = 0; i < itineraries.length; i++) {
+                var currentLeg = lookupLeg(itineraries[i].OutboundLegId, legs);
+                var departCity = (lookupCity(currentLeg.OriginStation, places)).Name;
+                var arriveCity = (lookupCity(currentLeg.DestinationStation, places)).Name;
+                var dDates = (currentLeg.Departure).split("T");
+                var aDates = (currentLeg.Arrival).split("T");
+                var departDate = moment(dDates[0], "YYYY-MM-DD").format("ddd MMM D");
+                var departTime = moment(dDates[1], "HH:mm:ss").format("h:mm A");
+                var arriveDate = moment(aDates[0], "YYYY-MM-DD").format("ddd MMM D");
+                var arriveTime = moment(aDates[1], "HH:mm:ss").format("h:mm A");
+                var flightPrice = Math.floor(itineraries[i].PricingOptions[0].Price);
+                var airline = lookupCarrier(currentLeg.Carriers[0], carriers);
+                var bookLink = itineraries[i].PricingOptions[0].DeeplinkUrl;
+
+                // Create a new row
+                var flightRow = $("<tr>").append(
+                    $("<td>").text(departDate), // Date
+                    $("<td>").text(departTime), // Depart
+                    $("<td>").text(arriveTime), // Arrive
+                    $("<td>").text(airline.Name),      // Airline
+                    $("<td>").text("$" + flightPrice), // Price
+                );
+
+                // add attributes to row to enable buying
+                flightRow.attr("data-bookURL", bookLink);
+                flightRow.attr("data-toggle", "tooltip");
+                flightRow.attr("data-placement", "right");
+                flightRow.attr("title", "BUY");
+                flightRow.addClass("book-trip")
+
+
+                // Create label for table
+                var flightCities = $("<div>").text(
+                    "Flights from " + departCity + " to " + arriveCity
+                );
+
+                // Append the new row to the table
+                $("#flight-cities").html(flightCities);
+
+                $("#flight-sked > tbody").append(flightRow);
             }
         }
 
-    </script>
+        function lookupCity(ID, places) {
+            for (var i = 0; i < places.length; i++) {
+                if (places[i].Id === ID) {
+                    console.log(places[i].Name);
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js">
-
-    ( function( window, document, $ ){
-    
-        var app = {};
-    
-    
-        app.init = function()
-        {
-           app.flightsGeo();
-        };
-        
-        app.flightsGeo = function( )
-        {     
-            // the session poll url you created
-            var url = 'http://business.skyscanner.net/apiservices/pricing/hk1/v1.0/<sessionKey>?apikey=<apikey>';
-            $.ajax({
-                type: "GET",
-                url: url,
-                dataType: 'json',
-                success: function( response ){
-                    var itineraries = response.Itineraries;
-                    var agents      = response.Agents;
-                    var legs        = response.Legs;
-                    var carriers    = response.Carriers;
-                    var places      = response.Places;
-    
-                    $.each(itineraries, function( itineraryKey, itineraryVal ){
-                        var inbound          = app.getObjects( legs, 'Id', itineraryVal.InboundLegId),
-                            inDepartureTime = inbound[0].Departure,
-                            inArrivalTime   = inbound[0].Arrival,
-                            inDepartureDate = inbound[0].Departure,
-                            inArrivalDate   = inbound[0].Arrival,
-                            inOrigin        = app.getObjects( places, 'Id', inbound[0].DestinationStation),
-                            inDestination   = app.getObjects( places, 'Id', inbound[0].OriginStation),
-                            inCarriers      = app.getObjects( carriers, 'Id', inbound[0].OperatingCarriers[0]);
-    
-                        var outbound         = app.getObjects( legs, 'Id', itineraryVal.OutboundLegId),
-                            outDepartureTime = outbound[0].Departure,
-                            outArrivalTime   = outbound[0].Arrival,
-                            outDepartureDate = outbound[0].Departure,
-                            outArrivalDate   = outbound[0].Arrival,
-                            outOrigin        = app.getObjects( places, 'Id', outbound[0].DestinationStation),
-                            outDestination   = app.getObjects( places, 'Id', outbound[0].OriginStation),
-                            outCarriers      = app.getObjects( carriers, 'Id', outbound[0].OperatingCarriers[0]);
-    
-    
-                        var agent     = app.getObjects( agents, 'Id', itineraryVal.PricingOptions[0].Agents[0]);
-                        var price     = itineraryVal.PricingOptions[0].Price.toFixed(2);
-                        var permalink = itineraryVal.PricingOptions[0].DeeplinkUrl;
-                        var time      = itineraryVal.PricingOptions[0].QuoteAgeInMinutes;
-    
-                        // NEW FORMAT OF DATA
-                        var data = {
-                            agent     : agent,
-                            price     : price,
-                            time      : time,
-                            permalink : permalink,
-                            inbound    : {
-                                time : {
-                                    departure : inDepartureTime,
-                                    arrival   : inArrivalTime
-                                },
-                                date : {
-                                    departure : inDepartureDate,
-                                    arrival   : inArrivalDate
-                                },
-                                station : {
-                                    origin      : inOrigin,
-                                    destination : inDestination
-                                },
-                                carriers : inCarriers
-                            },
-                            outbound  : {
-                                time : {
-                                    departure : outDepartureTime,
-                                    arrival   : outArrivalTime
-                                },
-                                date : {
-                                    departure : outDepartureDate,
-                                    arrival   : outArrivalDate
-                                },
-                                station : {
-                                    origin      : outOrigin,
-                                    destination : outDestination
-                                },
-                                carriers : outCarriers
-                            }
-                        };
-                        
-                        // will display the NEW FORMAT OF DATA
-                        console.log( data );
-                    });
-                },
-                error: function( error ){
-                    console.log( error );
-                }
-            });
-        };
-    
-        app.displayData = function( data  )
-        {
-            console.log( data );
-        };
-    
-        app.getObjects = function(obj, key, val) {
-            var objects = [];
-            for (var i in obj) {
-                if (!obj.hasOwnProperty(i)) continue;
-                if (typeof obj[i] == 'object') {
-                    objects = objects.concat(app.getObjects(obj[i], key, val));    
-                } else 
-                //if key matches and value matches or if key matches and value is not passed (eliminating the case where key matches but passed value does not)
-                if (i == key && obj[i] == val || i == key && val == '') { //
-                    objects.push(obj);
-                } else if (obj[i] == val && key == ''){
-                    //only add if the object is not already in the array
-                    if (objects.lastIndexOf(obj) == -1){
-                        objects.push(obj);
-                    }
+                    return places[i]
                 }
             }
-            return objects;
-        };
-    
-    
-        $(document).ready( app.init );
-    
-        return app;
-    
-    })( window, document, jQuery );
-    
+        }
+
+        function lookupCarrier(ID, carriers) {
+            for (var i = 0; i < carriers.length; i++) {
+                if (carriers[i].Id === ID) {
+                    return carriers[i]
+                }
+            }
+        }
+
+        function lookupLeg(ID, legs) {
+            for (var i = 0; i < legs.length; i++) {
+                if (legs[i].Id === ID) {
+                    return legs[i];
+                }
+            }
+        }
+
+        $(document).on("click", ".book-trip", function () {
+            var buy_url = $(this).attr("data-bookURL");
+            console.log(buy_url);
+
+
+            //this will redirect us in new tab
+            window.open(buy_url, '_blank');
+
+        });
+
+
     </script>
+
     <!-- ////////////// -->
 
 </body>
