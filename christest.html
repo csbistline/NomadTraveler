@@ -125,17 +125,200 @@
                     "country": "US",
                     "currency": "USD",
                     "locale": "en-US",
-                    "originPlace": "SFO-sky",
-                    "destinationPlace": "LHR-sky",
-                    "outboundDate": "2019-04-01",
+                    "originPlace": "BNA-sky",
+                    "destinationPlace": "JFK-sky",
+                    "outboundDate": "2019-03-18",
                     "adults": "1"
                 }
             }
 
-            $.ajax(settings).done(function (response) {
-                console.log(response);
+            $.ajax(settings).done(function (response, status, jqXHR) {
+                // console.log(response);
+                // console.log(status);
+                // console.log(jqXHR.getResponseHeader('Location'));
+
+                var loc = (jqXHR.getResponseHeader('Location')).split("/");
+                // console.log(loc);
+                var sessionkey = loc[loc.length - 1];
+                // console.log(sessionkey);
+                pollResults(sessionkey)
             });
         });
+
+
+        function pollResults(sessionkey) {
+            var settings = {
+                "async": true,
+                "crossDomain": true,
+                "url": "https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/pricing/uk2/v1.0/" + sessionkey + "?pageIndex=0&pageSize=15",
+                "method": "GET",
+                "headers": {
+                    "X-RapidAPI-Key": "70b4bd87d4msh46110c5b4e371f1p11eccbjsn8595807c8dfe",
+                }
+            };
+            $.ajax(settings).done(function (result) {
+                if (result.Itineraries <= 10) {
+                    console.log("Doing it again");
+                } else {
+
+                    createItin(result.Itineraries);
+                    // console.log(result);
+                    // console.log(result.Itineraries);
+                    // console.log(result.Itineraries[0].PricingOptions[0].Price);
+                }
+
+            });
+        };
+
+        function createItin(itin) {
+            console.log(itin);
+            
+            for (var i = 0; i < itin.length; i++) {
+                var newDiv = $("<div>");
+                var outLeg = $("<div>");
+                // console.log(itin[i].BookingDetailsLink.OutboundLegId);
+                outLeg.text("Destination: " + itin[i].OutboundLegId);
+                var price = $("<div>");
+                price.text("Price:" + itin[i].PricingOptions[0].Price);
+                newDiv.append(outLeg, price);
+                $("#display-area").append(newDiv);
+            }
+        }
+
+    </script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js">
+
+    ( function( window, document, $ ){
+    
+        var app = {};
+    
+    
+        app.init = function()
+        {
+           app.flightsGeo();
+        };
+        
+        app.flightsGeo = function( )
+        {     
+            // the session poll url you created
+            var url = 'http://business.skyscanner.net/apiservices/pricing/hk1/v1.0/<sessionKey>?apikey=<apikey>';
+            $.ajax({
+                type: "GET",
+                url: url,
+                dataType: 'json',
+                success: function( response ){
+                    var itineraries = response.Itineraries;
+                    var agents      = response.Agents;
+                    var legs        = response.Legs;
+                    var carriers    = response.Carriers;
+                    var places      = response.Places;
+    
+                    $.each(itineraries, function( itineraryKey, itineraryVal ){
+                        var inbound          = app.getObjects( legs, 'Id', itineraryVal.InboundLegId),
+                            inDepartureTime = inbound[0].Departure,
+                            inArrivalTime   = inbound[0].Arrival,
+                            inDepartureDate = inbound[0].Departure,
+                            inArrivalDate   = inbound[0].Arrival,
+                            inOrigin        = app.getObjects( places, 'Id', inbound[0].DestinationStation),
+                            inDestination   = app.getObjects( places, 'Id', inbound[0].OriginStation),
+                            inCarriers      = app.getObjects( carriers, 'Id', inbound[0].OperatingCarriers[0]);
+    
+                        var outbound         = app.getObjects( legs, 'Id', itineraryVal.OutboundLegId),
+                            outDepartureTime = outbound[0].Departure,
+                            outArrivalTime   = outbound[0].Arrival,
+                            outDepartureDate = outbound[0].Departure,
+                            outArrivalDate   = outbound[0].Arrival,
+                            outOrigin        = app.getObjects( places, 'Id', outbound[0].DestinationStation),
+                            outDestination   = app.getObjects( places, 'Id', outbound[0].OriginStation),
+                            outCarriers      = app.getObjects( carriers, 'Id', outbound[0].OperatingCarriers[0]);
+    
+    
+                        var agent     = app.getObjects( agents, 'Id', itineraryVal.PricingOptions[0].Agents[0]);
+                        var price     = itineraryVal.PricingOptions[0].Price.toFixed(2);
+                        var permalink = itineraryVal.PricingOptions[0].DeeplinkUrl;
+                        var time      = itineraryVal.PricingOptions[0].QuoteAgeInMinutes;
+    
+                        // NEW FORMAT OF DATA
+                        var data = {
+                            agent     : agent,
+                            price     : price,
+                            time      : time,
+                            permalink : permalink,
+                            inbound    : {
+                                time : {
+                                    departure : inDepartureTime,
+                                    arrival   : inArrivalTime
+                                },
+                                date : {
+                                    departure : inDepartureDate,
+                                    arrival   : inArrivalDate
+                                },
+                                station : {
+                                    origin      : inOrigin,
+                                    destination : inDestination
+                                },
+                                carriers : inCarriers
+                            },
+                            outbound  : {
+                                time : {
+                                    departure : outDepartureTime,
+                                    arrival   : outArrivalTime
+                                },
+                                date : {
+                                    departure : outDepartureDate,
+                                    arrival   : outArrivalDate
+                                },
+                                station : {
+                                    origin      : outOrigin,
+                                    destination : outDestination
+                                },
+                                carriers : outCarriers
+                            }
+                        };
+                        
+                        // will display the NEW FORMAT OF DATA
+                        console.log( data );
+                    });
+                },
+                error: function( error ){
+                    console.log( error );
+                }
+            });
+        };
+    
+        app.displayData = function( data  )
+        {
+            console.log( data );
+        };
+    
+        app.getObjects = function(obj, key, val) {
+            var objects = [];
+            for (var i in obj) {
+                if (!obj.hasOwnProperty(i)) continue;
+                if (typeof obj[i] == 'object') {
+                    objects = objects.concat(app.getObjects(obj[i], key, val));    
+                } else 
+                //if key matches and value matches or if key matches and value is not passed (eliminating the case where key matches but passed value does not)
+                if (i == key && obj[i] == val || i == key && val == '') { //
+                    objects.push(obj);
+                } else if (obj[i] == val && key == ''){
+                    //only add if the object is not already in the array
+                    if (objects.lastIndexOf(obj) == -1){
+                        objects.push(obj);
+                    }
+                }
+            }
+            return objects;
+        };
+    
+    
+        $(document).ready( app.init );
+    
+        return app;
+    
+    })( window, document, jQuery );
+    
     </script>
     <!-- ////////////// -->
 
