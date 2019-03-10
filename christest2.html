@@ -55,16 +55,17 @@
                                 <input class="form-control" id="arrive-city" placeholder="FLL" type="text">
                             </div>
                             <div class="form-group">
-                                <label for="date-input">Date</label>
-                                <input class="form-control" id="date-input" placeholder="YYYY-MM-DD or YYYY-MM"
+                                <label for="depart-date">Departure Date</label>
+                                <input class="form-control" id="depart-date" placeholder="YYYY-MM-DD or YYYY-MM"
                                     type="text">
                             </div>
-                            <!-- <div class="form-group">
-                                <label for="frequency-input">Frequency (min)</label>
-                                <input class="form-control" id="frequency-input" placeholder="25" type="text">
-                            </div> -->
-                            <button class="btn btn-primary btn-block search-btn" id="search-flight-btn">Search
-                                flights</button>
+                            <div class="form-group">
+                                <label for="return-date">Return Date</label>
+                                <input class="form-control" id="return-date" placeholder="YYYY-MM-DD or YYYY-MM"
+                                    type="text">
+                            </div>
+                            <button class="btn btn-primary btn-block search-btn" id="search-quote-btn">Browse flights by price</button>
+                            <button class="btn btn-primary btn-block search-btn" id="search-date-btn">Browse flights by date</button>
                         </form>
 
                     </div>
@@ -75,6 +76,34 @@
 
         <!-- <button class="btn btn-primary search-btn" type="submit">SEARCH</button> -->
         <div id="display-area"></div>
+
+        <div class="row">
+
+            <div class="col-md-12">
+
+                <!-- Current trains-->
+                <div class="card mb-4">
+                    <div class="card-header font-weight-bold">Choose flight<span id="clock"
+                            class="text-right float-right"></span></div>
+                    <div class="card-body">
+                        <table class="table table-sm table-hover" id='train-sked'>
+                            <thead>
+                                <tr>
+                                    <th scope="col">Train Name</th>
+                                    <th scope="col">Destination</th>
+                                    <th scope="col">Frequency (min)</th>
+                                    <th scope="col">Next Arrival</th>
+                                    <th scope="col">Minutes Away</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
 
@@ -111,7 +140,7 @@
 
         // CONNECT TO FLIGHT API
 
-        $(document).on("click", ".search-btn", function () {
+        $(document).on("click", "#search-quote-btn", function () {
 
             // prevent submit action
             event.preventDefault();
@@ -120,13 +149,23 @@
 
             var departCity = $("#depart-city").val().trim();
             var arriveCity = $("#arrive-city").val().trim();
-            var departDate = $("#date-input").val().trim();
+            var departDate = $("#depart-date").val().trim();
+            var returnDate = $("#return-date").val().trim();
+            var queryURL = "https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/US/USD/en-US/"
+                + departCity
+                + "-sky/"
+                + arriveCity
+                + "-sky/"
+                + departDate
+                + "?inboundpartialdate="
+                + returnDate;
+            console.log(queryURL);
 
 
             var settings = {
                 "async": true,
                 "crossDomain": true,
-                "url": "https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/US/USD/en-US/" + departCity + "-sky/" + arriveCity + "-sky/" + departDate,
+                "url": queryURL,
                 "method": "GET",
                 "headers": {
                     "X-RapidAPI-Key": "70b4bd87d4msh46110c5b4e371f1p11eccbjsn8595807c8dfe",
@@ -143,6 +182,50 @@
 
             });
         });
+
+        $(document).on("click", "#search-date-btn", function () {
+
+            // prevent submit action
+            event.preventDefault();
+
+
+
+            var departCity = $("#depart-city").val().trim();
+            var arriveCity = $("#arrive-city").val().trim();
+            var departDate = $("#depart-date").val().trim();
+            var returnDate = $("#return-date").val().trim();
+            var queryURL = "https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsedates/v1.0/US/USD/en-US/"
+                + departCity
+                + "-sky/"
+                + arriveCity
+                + "-sky/"
+                + departDate
+                + "?inboundpartialdate="
+                + returnDate;
+            console.log(queryURL);
+
+
+            var settings = {
+                "async": true,
+                "crossDomain": true,
+                "url": queryURL,
+                "method": "GET",
+                "headers": {
+                    "X-RapidAPI-Key": "70b4bd87d4msh46110c5b4e371f1p11eccbjsn8595807c8dfe",
+                    "Content-Type": "application/x-www-form-urlencoded",
+                    "cache-control": "no-cache",
+                    "Postman-Token": "60c26db9-c8ba-43ca-aaff-ddfb24e440f2"
+                },
+                "data": ""
+            }
+
+            $.ajax(settings).done(function (result) {
+                console.log("Result", result);
+                createItin(result);
+
+            });
+        });
+
 
         function createItin(result) {
             $("#display-area").empty();
@@ -175,7 +258,7 @@
                 carrier.text("Airline: " + carrierName)
                 travelDate.text("Date: " + currentQuote.OutboundLeg.DepartureDate)
                 newDiv.append(carrier, price, originId, desitinationId, travelDate);
-                $("#display-area").append(newDiv);
+                $("#display-area").append(newDiv, "<hr>");
             }
         }
 
