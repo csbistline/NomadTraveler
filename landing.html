@@ -6,21 +6,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Nomad Traveler</title>
-    <!-- Latest compiled and minified CSS -->
+    <!--site icon-->
+    <link rel="icon" href="resources/images/favicon.ico">
+    <!--reset css-->
+    <link rel="stylesheet" href="resources/styles/reset.css" <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
         crossorigin="anonymous">
-    <!-- Optional theme -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+    <!-- font awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
         crossorigin="anonymous">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+    <!--styling-->
     <link rel="stylesheet" href="resources/styles/beginning.css">
 </head>
 
 <body>
-    <div class="page-header">
+
+    <header>
         <h1>Nomad Traveler</h1>
-    </div>
+    </header>
+
 
     <div class="container">
         <div class="card">
@@ -30,32 +34,30 @@
             <div class="card-body">
                 <form>
                     <div class="form-group">
-                        <label for="depart-city">Depart From</label>
-                        <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
-                        <input class="form-control" placeholder="BNA" type="text" id="depart-city">
-                    </div>
-                    <div class="form-group">
-                        <label for="arrive-city">Arrive At</label>
-                        <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
+                        <label class="control-label" for="depart-city">Depart From</label>
+                        <input class="form-control input-group-prepend " placeholder="BNA" type="text" id="depart-city">
+                        <i class="input-group-prepend fas fas-map-marker-alt"></i>
+                        <label class="control-label" for="arrive-city">Arrive At</label>
+                        <span class="glyphicon glyphicon-map-marker"></span>
                         <input class="form-control" id="arrive-city" placeholder="FLL" type="text">
-                    </div>
-                    <div class="form-group">
-                        <label for="depart-date">Departure Date</label>
+                        <label class="control-label" for="depart-date">Departure Date</label>
                         <input class="form-control" id="depart-date" type="date">
-                    </div>
-                    <div class="form-group">
-                        <label for="return-date">Return Date</label>
+                        <label class="control-label" for="return-date">Return Date</label>
                         <input class="form-control" id="return-date" type="date">
-                        <button class="btn btn-primary btn-block search-btn" id="search-date-btn">Browse flights by date</button>
+                        <label class="control-label" for="return-date">Budget</label>
+                        <input type="text" class="form-control" placeholder="Budget Amount">
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Budget Amount">
-                        <button class="btn btn-primary btn-block search-btn" id="search-quote-btn">Browse flights by price</button>
+                        <button class="btn btn-secondary btn-lg btn-block" id="search-date-btn" style="color:black">Browse flights by date</button>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-secondary btn-lg btn-block" id="search-quote-btn" style="color:black">Browse flights by
+                            price</button>
                     </div>
                 </form>
             </div>
         </div>
-    </div>    <br>
+    </div> <br>
     <div class="container">
         <div class="panel panel-default" id="display-area">
             <div class="panel-body">

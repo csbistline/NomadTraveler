@@ -1,10 +1,4 @@
-body {
-    background-image: url(../images/aircraft-airplane-aviation-333525.jpg);
-    background-size: cover;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-    z-index: -5;
-    margin: auto;
+body{
+    background: no-repeat center/100% url("../images/aircraft-airplane-aviation-333525.jpg");
+    color: white;
 };
