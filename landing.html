@@ -58,21 +58,44 @@
                     </div>
                     <div class="form-group">
                         <!--Budget--->
-                        <label class="control-label" for="return-date">Budget</label>
-                        <input type="text" class="form-control" placeholder="Budget Amount">
+                        <label class="control-label" for="budget-amount">Budget</label>
+                        <input type="text" class="form-control" id="budget-amount" placeholder="Budget Amount">
                     </div>
                     <div class="form-group">
                         <button class="btn btn-secondary btn-lg btn-block" id="search-date-btn" style="color:black">Find
                             Flight</button>
                     </div>
                 </form>
+                <!-- <button onclick ="mainApp.logOut">Log-Out</button> -->
+                
+            </div>
+        </div> 
+        <div class="row" >
+
+            <div class="col-md-12">
+
+                <!-- Flight sked -->
+                <div class="card mb-4">
+                    <div class="card-header font-weight-bold h3" id="flight-cities">Flights</div>
+                    <div class="card-body" id="flight-results">
+                        <table class="table table-sm table-hover" id='flight-sked'>
+                            <thead>
+                                <tr>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Depart</th>
+                                    <th scope="col">Airline</th>
+                                    <th scope="col">Price</th>
+                                    <th scope="col">Select</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
-    </div> <br>
-    <div class="container">
-        <div class="panel panel-default" id="flight-sked">
-            
-        </div>
+
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -82,6 +105,7 @@
         crossorigin="anonymous"></script>
     <!--Project Javascript-->
     <script src="resources/javascript/app.js"></script>
+    <script src="resources/javascript/firebase.js"></script>
 </body>
 
 </html>

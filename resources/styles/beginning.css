@@ -2,3 +2,15 @@ body{
     background: no-repeat center url("../images/aircraft-airplane-aviation-333525.jpg");
     color: white;
 }
+<<<<<<< HEAD
+=======
+
+#flight-results {
+    background-color: whitesmoke;
+    color: black;
+}
+
+h1 {
+    text-align: center;
+}
+>>>>>>> 518cd95b2b7f9b6f0eae43b1902805266522cb76
