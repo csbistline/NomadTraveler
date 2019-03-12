@@ -1,9 +1,9 @@
 $(document).ready(function () {
 
-    $(document).on("click", "#search-quote-btn", function () {
+    $(document).on("click", "#search-date-btn", function () {
 
         // prevent submit action
-        event.preventDefault();
+        event.preventDefault(); 
 
         // grab user input
         var departCity = $("#depart-city").val().trim();
