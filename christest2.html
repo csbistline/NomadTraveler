@@ -104,7 +104,7 @@
     </div>
 
 
-
+ 
 
 
 
@@ -143,7 +143,7 @@
             event.preventDefault();
 
 
-
+            // grab user input
             var departCity = $("#depart-city").val().trim();
             var arriveCity = $("#arrive-city").val().trim();
             var departDate = $("#depart-date").val().trim();
@@ -250,7 +250,6 @@
                 var flightRow = $("<tr>").append(
                     $("<td>").text(departDate), // Date
                     $("<td>").text(departTime), // Depart
-                    // $("<td>").text(arriveTime), // Arrive
                     $("<td>").text(airline.Name),      // Airline
                     $("<td>").text("$" + flightPrice), // Price
                 );
