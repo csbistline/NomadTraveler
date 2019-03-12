@@ -1,4 +1,5 @@
 $(document).ready(function () {
+
     // console.log("ready");
 
     // ==================================
@@ -36,6 +37,8 @@ $(document).ready(function () {
         var departCity = $("#depart-city").val().trim();
         var arriveCity = $("#arrive-city").val().trim();
         var departDate = $("#depart-date").val().trim();
+        console.log(departDate);
+        
         tripBudget = parseInt($("#budget-amount").val().trim());
         var queryURL = "https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/US/USD/en-US/"
             + departCity
@@ -43,7 +46,7 @@ $(document).ready(function () {
             + arriveCity
             + "-sky/"
             + departDate
-        // console.log(queryURL);
+        console.log(queryURL);
 
         var settings = {
             "async": true,
@@ -66,7 +69,7 @@ $(document).ready(function () {
         });
     });
 
-    // create flight itinerary
+    // create flight itinerary 
     function createItin(result) {
         $("#flight-sked > tbody").empty();
 
@@ -79,8 +82,8 @@ $(document).ready(function () {
 
         for (var i = 0; i < quotes.length; i++) {
             var currentQuote = quotes[i];
-            var departCity = lookupCity(currentQuote.OutboundLeg.OriginId, places).Name;
-            var arriveCity = lookupCity(currentQuote.OutboundLeg.DestinationId, places).Name;
+            var departCity = lookupCity(currentQuote.OutboundLeg.OriginId, places).CityName;
+            var arriveCity = lookupCity(currentQuote.OutboundLeg.DestinationId, places).CityName;
             var dDates = (currentQuote.OutboundLeg.DepartureDate).split("T");
             var departDate = moment(dDates[0], "YYYY-MM-DD").format("ddd MMM D");
             var departTime = moment(dDates[1], "HH:mm:ss").format("h:mm A");
