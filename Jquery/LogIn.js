@@ -12,11 +12,11 @@
   const btnLogOut = document.getElementById('btnLogOut');
 
 
-  btnLogin.addEventListener('click', e => {
+  btnLogIn.addEventListener('click', e => {
     const email = txtEmail.value;
     const pass = txtPassword.value;
     const auth = firebase.auth();
-    const promise = auth.signWithEmailandPassword(email, pass);
+    const promise = auth.signInWithEmailAndPassword(email, pass);
     promise.catch(e => console.log(e.message));
 
 
@@ -27,7 +27,7 @@
     const email = txtEmail.value;
     const pass = txtPassword.value;
     const auth = firebase.auth();
-    const promise = auth.createUserWithEmailandPassword(email, pass);
+    const promise = auth.createUserWithEmailAndPassword(email, pass);
     promise.catch(e => console.log(e.message));
 
   });
