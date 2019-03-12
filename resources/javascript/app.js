@@ -8,16 +8,16 @@ $(document).ready(function () {
     var tripBudget;
 
     // Initialize Firebase
-    var config = {
-        apiKey: "AIzaSyC4jU3Rp6zvHA7Srnzj9ueT2rD6dbwMuVo",
-        authDomain: "testproject-1abc2.firebaseapp.com",
-        databaseURL: "https://testproject-1abc2.firebaseio.com",
-        projectId: "testproject-1abc2",
-        storageBucket: "testproject-1abc2.appspot.com",
-        messagingSenderId: "463399312243"
-    };
-    firebase.initializeApp(config);
-    var db = firebase.database()
+    // var config = {
+    //     apiKey: "AIzaSyC4jU3Rp6zvHA7Srnzj9ueT2rD6dbwMuVo",
+    //     authDomain: "testproject-1abc2.firebaseapp.com",
+    //     databaseURL: "https://testproject-1abc2.firebaseio.com",
+    //     projectId: "testproject-1abc2",
+    //     storageBucket: "testproject-1abc2.appspot.com",
+    //     messagingSenderId: "463399312243"
+    // };
+    // firebase.initializeApp(config);
+    var db = app_firebase.database()
 
     // ==================================
     // OBJECTS
