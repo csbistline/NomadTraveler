@@ -1,7 +1,10 @@
 $(document).ready(function () {
+    console.log("ready");
+    
 
     $(document).on("click", "#search-date-btn", function () {
-
+        console.log("search button clicked");
+        
         // prevent submit action
         event.preventDefault(); 
 
@@ -15,7 +18,7 @@ $(document).ready(function () {
             + arriveCity
             + "-sky/"
             + departDate
-        // console.log(queryURL);
+        console.log(queryURL);
 
         var settings = {
             "async": true,
@@ -32,7 +35,7 @@ $(document).ready(function () {
         }
 
         $.ajax(settings).done(function (result) {
-            // console.log("Result", result);
+            console.log("Result", result);
             createItin(result);
 
         });
@@ -45,9 +48,9 @@ $(document).ready(function () {
         var quotes = result.Quotes;
         var carriers = result.Carriers;
         var places = result.Places;
-        // console.log("Quotes", quotes);
-        // console.log("Carriers", carriers);
-        // console.log("Places", places);
+        console.log("Quotes", quotes);
+        console.log("Carriers", carriers);
+        console.log("Places", places);
 
         for (var i = 0; i < quotes.length; i++) {
             var currentQuote = quotes[i];
