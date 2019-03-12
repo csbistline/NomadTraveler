@@ -3,7 +3,7 @@
  */
 (function () {
   // Initialize Firebase
-  var config = {
+  const config = {
     apiKey: "AIzaSyA9xnax8HPQbzeKX1sHpzmyeKa3M0djyY8",
     authDomain: "nomad-traveler.firebaseapp.com",
     databaseURL: "https://nomad-traveler.firebaseio.com",
@@ -54,7 +54,7 @@
       btnLogOut.classList.remove("hide");
     } else {
       console.log("not logged in")
-      btnLogOut.classList.add('hide');
+      btnLogOut.classList.add("hide");
     }
   });
 
