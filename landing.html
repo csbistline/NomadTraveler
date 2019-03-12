@@ -6,8 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Nomad Traveler</title>
-    <!-- firebase library -->
-    <script src="https://www.gstatic.com/firebasejs/5.8.6/firebase.js"></script>
     <!--site icon-->
     <link rel="icon" href="resources/images/favicon.ico">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -17,6 +15,8 @@
         integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <!--styling-->
     <link rel="stylesheet" href="resources/styles/beginning.css">
+    <link rel="stylesheet" href="resources/styles/airports.css">
+
     <!-- Firebase Reference -->
     <script src="https://www.gstatic.com/firebasejs/4.12.0/firebase.js"></script>
 
@@ -44,13 +44,15 @@
                         <!--Departure Airport-->
                         <label class="control-label" for="depart-city">Depart From</label>
                         <span class="glyphicon glyphicon-map-marker"></span>
-                        <input class="form-control input-group-prepend " placeholder="BNA" type="text" id="depart-city">
+                        <input class="form-control input-group-prepend autocomplete"
+                            placeholder="Enter city or airport code" type="text" id="depart-city">
                     </div>
                     <div class="form-group">
                         <!--Arrival Airport-->
                         <label class="control-label" for="arrive-city">Arrive At</label>
                         <span class="glyphicon glyphicon-map-marker"></span>
-                        <input class="form-control" id="arrive-city" placeholder="FLL" type="text">
+                        <input class="form-control autocomplete" id="arrive-city"
+                            placeholder="Enter city or airport code" type="text">
                     </div>
                     <div class="form-group">
                         <!--Depart Date-->
@@ -62,7 +64,7 @@
                     <div class="form-group">
                         <!--Budget--->
                         <label class="control-label" for="budget-amount">Budget</label>
-                        <input type="number" class="form-control" id="budget-amount" placeholder="Budget Amount">
+                        <input type="number" step="100" min="100" class="form-control" id="budget-amount" placeholder="Budget Amount">
                     </div>
 
                     <div class="form-group">
@@ -70,8 +72,6 @@
                             Flight</button>
                     </div>
                 </form>
-                <!-- <button onclick ="mainApp.logOut">Log-Out</button> -->
-                
             </div>
         </div>
         <div class="row">
@@ -110,10 +110,16 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.16.1/lodash.min.js"></script>
+    <script src="https://unpkg.com/fuse.js@2.5.0/src/fuse.min.js"></script>
 
     <!--Project Javascript-->
     <script src="resources/javascript/app.js"></script>
     <script src="resources/javascript/firebase.js"></script>
+    <script src="https://screenfeedcontent.blob.core.windows.net/html/airports.js"></script>
+    <script src="resources/javascript/findairport.js"></script>
+
+
 </body>
 
 </html>
