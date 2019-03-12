@@ -27,12 +27,6 @@
     <script src="https://www.gstatic.com/firebasejs/5.8.5/firebase-functions.js"></script> -->
 
     <style>
-        #flight-sked th,
-        td {
-            display: inline-block;
-            width: 20%;
-        }
-
         /* OUTLINE BORDERS */
         /* div {
             border: solid black 1px;
@@ -95,7 +89,7 @@
                                 <tr>
                                     <th scope="col">Date</th>
                                     <th scope="col">Depart</th>
-                                    <th scope="col">Arrive</th>
+                                    <!-- <th scope="col">Arrive</th> -->
                                     <th scope="col">Airline</th>
                                     <th scope="col">Price</th>
                                 </tr>
@@ -110,7 +104,7 @@
     </div>
 
 
-
+ 
 
 
 
@@ -143,119 +137,122 @@
 
         // CONNECT TO FLIGHT API
 
-        $(document).on("click", ".search-btn", function () {
+        $(document).on("click", "#search-quote-btn", function () {
+
             // prevent submit action
             event.preventDefault();
 
 
-            // capture user input
+            // grab user input
             var departCity = $("#depart-city").val().trim();
             var arriveCity = $("#arrive-city").val().trim();
             var departDate = $("#depart-date").val().trim();
             var returnDate = $("#return-date").val().trim();
+            var queryURL = "https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/US/USD/en-US/"
+                + departCity
+                + "-sky/"
+                + arriveCity
+                + "-sky/"
+                + departDate
+                + "?inboundpartialdate="
+                + returnDate;
+            console.log(queryURL);
 
 
             var settings = {
                 "async": true,
                 "crossDomain": true,
-                "url": "https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/pricing/v1.0",
-                "method": "POST",
-                "headers": {
-                    "X-RapidAPI-Key": "70b4bd87d4msh46110c5b4e371f1p11eccbjsn8595807c8dfe",
-                    "Content-Type": "application/x-www-form-urlencoded",
-                    // "cache-control": "no-cache",
-                    // "Postman-Token": "7c908061-b400-4b2b-9068-a1c8409468a1"
-                },
-                "data": {
-                    "country": "US",
-                    "currency": "USD",
-                    "locale": "en-US",
-                    "originPlace": departCity + "-sky",
-                    "destinationPlace": arriveCity + "-sky",
-                    "outboundDate": departDate,
-                    "inboundDate": returnDate,
-                    "cabinClass": "economy",
-                    "adults": "1"
-                }
-            }
-            console.log(settings);
-
-            $.ajax(settings).done(function (response, status, jqXHR) {
-                var loc = (jqXHR.getResponseHeader('Location')).split("/");
-                var sessionkey = loc[loc.length - 1];
-                pollResults(sessionkey)
-            });
-        });
-
-
-        function pollResults(sessionkey) {
-            var settings = {
-                "async": true,
-                "crossDomain": true,
-                "url": "https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/pricing/uk2/v1.0/" + sessionkey + "?pageIndex=0&pageSize=15",
-                // "url": "https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/pricing/uk2/v1.0/" + sessionkey,
+                "url": queryURL,
                 "method": "GET",
                 "headers": {
                     "X-RapidAPI-Key": "70b4bd87d4msh46110c5b4e371f1p11eccbjsn8595807c8dfe",
-                }
-            };
-            $.ajax(settings).done(function (result) {
-                if (result.Itineraries <= 10) {
-                    console.log("Doing it again");
-                } else {
-                    console.log(result);
+                    "Content-Type": "application/x-www-form-urlencoded",
+                    "cache-control": "no-cache",
+                    "Postman-Token": "60c26db9-c8ba-43ca-aaff-ddfb24e440f2"
+                },
+                "data": ""
+            }
 
-                    createItin(result);
-                }
+            $.ajax(settings).done(function (result) {
+                console.log("Result", result);
+                createItin(result);
 
             });
-        };
+        });
+
+        $(document).on("click", "#search-date-btn", function () {
+
+            // prevent submit action
+            event.preventDefault();
+
+
+
+            var departCity = $("#depart-city").val().trim();
+            var arriveCity = $("#arrive-city").val().trim();
+            var departDate = $("#depart-date").val().trim();
+            var returnDate = $("#return-date").val().trim();
+            var queryURL = "https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsedates/v1.0/US/USD/en-US/"
+                + departCity
+                + "-sky/"
+                + arriveCity
+                + "-sky/"
+                + departDate
+                + "?inboundpartialdate="
+                + returnDate;
+            console.log(queryURL);
+
+
+            var settings = {
+                "async": true,
+                "crossDomain": true,
+                "url": queryURL,
+                "method": "GET",
+                "headers": {
+                    "X-RapidAPI-Key": "70b4bd87d4msh46110c5b4e371f1p11eccbjsn8595807c8dfe",
+                    "Content-Type": "application/x-www-form-urlencoded",
+                    "cache-control": "no-cache",
+                    "Postman-Token": "60c26db9-c8ba-43ca-aaff-ddfb24e440f2"
+                },
+                "data": ""
+            }
+
+            $.ajax(settings).done(function (result) {
+                console.log("Result", result);
+                createItin(result);
+
+            });
+        });
+
 
         function createItin(result) {
             $("#flight-sked > tbody").empty();
 
 
-            var itineraries = result.Itineraries;
+            var quotes = result.Quotes;
             var carriers = result.Carriers;
             var places = result.Places;
-            var legs = result.Legs;
-
-            console.log("Itineraries", itineraries);
+            console.log("Quotes", quotes);
             console.log("Carriers", carriers);
             console.log("Places", places);
-            console.log("Legs", legs);
 
 
-            for (var i = 0; i < itineraries.length; i++) {
-                var currentLeg = lookupLeg(itineraries[i].OutboundLegId, legs);
-                var departCity = (lookupCity(currentLeg.OriginStation, places)).Name;
-                var arriveCity = (lookupCity(currentLeg.DestinationStation, places)).Name;
-                var dDates = (currentLeg.Departure).split("T");
-                var aDates = (currentLeg.Arrival).split("T");
+            for (var i = 0; i < quotes.length; i++) {
+                var currentQuote = quotes[i];
+                var departCity = lookupCity(currentQuote.OutboundLeg.OriginId, places).Name;
+                var arriveCity = lookupCity(currentQuote.OutboundLeg.DestinationId, places).Name;
+                var dDates = (currentQuote.OutboundLeg.DepartureDate).split("T");
                 var departDate = moment(dDates[0], "YYYY-MM-DD").format("ddd MMM D");
                 var departTime = moment(dDates[1], "HH:mm:ss").format("h:mm A");
-                var arriveDate = moment(aDates[0], "YYYY-MM-DD").format("ddd MMM D");
-                var arriveTime = moment(aDates[1], "HH:mm:ss").format("h:mm A");
-                var flightPrice = Math.floor(itineraries[i].PricingOptions[0].Price);
-                var airline = lookupCarrier(currentLeg.Carriers[0], carriers);
-                var bookLink = itineraries[i].PricingOptions[0].DeeplinkUrl;
+                var flightPrice = Math.floor(currentQuote.MinPrice);
+                var airline = lookupCarrier(currentQuote.OutboundLeg.CarrierIds[0], carriers);
 
-                // Create a new row
+
                 var flightRow = $("<tr>").append(
                     $("<td>").text(departDate), // Date
                     $("<td>").text(departTime), // Depart
-                    $("<td>").text(arriveTime), // Arrive
                     $("<td>").text(airline.Name),      // Airline
                     $("<td>").text("$" + flightPrice), // Price
                 );
-
-                // add attributes to row to enable buying
-                flightRow.attr("data-bookURL", bookLink);
-                flightRow.attr("data-toggle", "tooltip");
-                flightRow.attr("data-placement", "right");
-                flightRow.attr("title", "BUY");
-                flightRow.addClass("book-trip")
-
 
                 // Create label for table
                 var flightCities = $("<div>").text(
@@ -266,14 +263,14 @@
                 $("#flight-cities").html(flightCities);
 
                 $("#flight-sked > tbody").append(flightRow);
+
+
             }
         }
 
         function lookupCity(ID, places) {
             for (var i = 0; i < places.length; i++) {
-                if (places[i].Id === ID) {
-                    console.log(places[i].Name);
-
+                if (places[i].PlaceId === ID) {
                     return places[i]
                 }
             }
@@ -281,33 +278,14 @@
 
         function lookupCarrier(ID, carriers) {
             for (var i = 0; i < carriers.length; i++) {
-                if (carriers[i].Id === ID) {
+                if (carriers[i].CarrierId === ID) {
                     return carriers[i]
                 }
             }
         }
 
-        function lookupLeg(ID, legs) {
-            for (var i = 0; i < legs.length; i++) {
-                if (legs[i].Id === ID) {
-                    return legs[i];
-                }
-            }
-        }
-
-        $(document).on("click", ".book-trip", function () {
-            var buy_url = $(this).attr("data-bookURL");
-            console.log(buy_url);
-
-
-            //this will redirect us in new tab
-            window.open(buy_url, '_blank');
-
-        });
-
 
     </script>
-
     <!-- ////////////// -->
 
 </body>
