@@ -1,0 +1,11 @@
+body{
+    background:url("../images/sleepingbag.jpg");
+
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+
+#Sleeping-Bag{
+    text-align: center;
+}
