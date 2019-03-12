@@ -1,24 +1,49 @@
 $(document).ready(function () {
-    console.log("ready");
-    
+    // console.log("ready");
+
+    // ==================================
+    // GLOBAL VARIABLES
+    // ==================================
+    var tripBudget;
+
+    // Initialize Firebase
+    var config = {
+        apiKey: "AIzaSyC4jU3Rp6zvHA7Srnzj9ueT2rD6dbwMuVo",
+        authDomain: "testproject-1abc2.firebaseapp.com",
+        databaseURL: "https://testproject-1abc2.firebaseio.com",
+        projectId: "testproject-1abc2",
+        storageBucket: "testproject-1abc2.appspot.com",
+        messagingSenderId: "463399312243"
+    };
+    firebase.initializeApp(config);
+    var db = firebase.database()
+
+    // ==================================
+    // OBJECTS
+    // ==================================
+
+
+
+    // ==================================
+    // FUNCTIONS
+    // ==================================
 
     $(document).on("click", "#search-date-btn", function () {
-        console.log("search button clicked");
-        
         // prevent submit action
-        event.preventDefault(); 
+        event.preventDefault();
 
         // grab user input
         var departCity = $("#depart-city").val().trim();
         var arriveCity = $("#arrive-city").val().trim();
         var departDate = $("#depart-date").val().trim();
+        tripBudget = parseInt($("#budget-amount").val().trim());
         var queryURL = "https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/US/USD/en-US/"
             + departCity
             + "-sky/"
             + arriveCity
             + "-sky/"
             + departDate
-        console.log(queryURL);
+        // console.log(queryURL);
 
         var settings = {
             "async": true,
@@ -35,7 +60,7 @@ $(document).ready(function () {
         }
 
         $.ajax(settings).done(function (result) {
-            console.log("Result", result);
+            // console.log("Result", result);
             createItin(result);
 
         });
@@ -62,12 +87,31 @@ $(document).ready(function () {
             var flightPrice = Math.floor(currentQuote.MinPrice);
             var airline = lookupCarrier(currentQuote.OutboundLeg.CarrierIds[0], carriers);
 
+            // create object of flight record
+            var flightObject = {
+                "origin": currentQuote.OutboundLeg.OriginId,
+                "destination": currentQuote.OutboundLeg.DestinationId,
+                "date": dDates[0],
+                "time": dDates[1],
+                "price": flightPrice,
+                "budget": tripBudget
+            };
+
+            // make it a string to be added to select link
+            flightObject = JSON.stringify(flightObject);
+            var addLink = $("<a>");
+            addLink.text("Add flight");
+            addLink.attr("data-save", flightObject);
+            addLink.attr("href", "#");
+            addLink.addClass("select-flight badge badge-primary");
+
             // create row to append to table
             var flightRow = $("<tr>").append(
                 $("<td>").text(departDate), // Date
                 $("<td>").text(departTime), // Depart
                 $("<td>").text(airline.Name),      // Airline
                 $("<td>").text("$" + flightPrice), // Price
+                $("<td>").html(addLink), // Price
             );
 
             // Create label for table
@@ -98,4 +142,17 @@ $(document).ready(function () {
             };
         };
     };
+
+    // store flight to firebase
+    function storeFlight(str) {
+        var newFlight = JSON.parse(str);
+        db.ref().push(newFlight);
+    };
+
+    $(document).on("click", ".select-flight", function () {
+        var str = $(this).attr("data-save");
+        console.log(str);
+        storeFlight(str);
+    });
+
 });
