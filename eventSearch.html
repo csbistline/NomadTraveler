@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Event Search</title>
+      <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.js"
+      integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    <script src="resources/javascript/hotel.js"></script>
+</head>
+<body>
+    <div class="container">
+    <h1>What would like to do?</h1>
+
+    <form id="event-form">
+      <label for="city-input">City search</label>
+      <input type="text" id="city-input" placeholder="Type city, then hit search.">
+      <br>
+
+      <!-- Button triggers event search -->
+      <input id="run-search" type="submit">
+    </form>
+
+    <!-- Events will be displayed here -->
+    <div class= "event" id="event-display"></div>
+
+
+</html>
