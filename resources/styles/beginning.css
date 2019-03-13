@@ -1,13 +1,29 @@
-body{
+body {
     background: no-repeat center url("../images/aircraft-airplane-aviation-333525.jpg");
-    color: white;
+    background-size: 100%;
 }
+
+.container {
+    background-color: whitesmoke;
+}
+
 
 #flight-results {
     background-color: whitesmoke;
     color: black;
+
 }
 
 h1 {
+    font-weight: bolder;
     text-align: center;
+}
+
+.btn {
+    color: navy;
+}
+
+#event-display {
+    background-color: whitesmoke;
+    color: black;
 }
