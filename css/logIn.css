@@ -1,0 +1,13 @@
+body{
+    background:url("../resources/images/lockers.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+button{
+    float:right
+}
+
+
+h1{
+    text-align: center;
+}
