@@ -1,5 +1,9 @@
+var userId;
+
 (function(){
 var ui = new firebaseui.auth.AuthUI(firebase.auth());
+console.log("ui", ui);
+
 var uiConfig = {
   callbacks: {
     signInSuccessWithAuthResult: function (authResult, redirectUrl) {
@@ -32,6 +36,12 @@ var uiConfig = {
   privacyPolicyUrl: '<your-privacy-policy-url>'
 };
 ui.start('#firebaseui-auth-container', uiConfig);
+
+// console.log(ui);
+// userId = ui.auth().currentUser.uid;
+// console.log(userId);
+
+
 })()
 
 
