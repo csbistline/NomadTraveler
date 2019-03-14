@@ -10,17 +10,20 @@ $(document).ready(function () {
             "method": "GET",
 
         }).then(function (response) {
+            console.log(response);
 
-            var results = response.events;
+            var eventList = response.events;
 
             // Looping through the array of events
-            for (var i = 0; i < results[i].title.length; i++) {
+            for (var i = 0; i < eventList.length; i++) {
                 //place to store event
-                console.log(results[i].title);
-                var eventName = $("<h4>").text(results[i].title);
-                var eventURL = $("<a>").attr("href", results[i].url).text(results[i].title + "'s link");
-                $("#event-body").append(eventName, eventURL);
-
+                var event = eventList[i];
+                var eventName = $("<td>").text(event.title);
+                var eventURL = $("<a>").attr("href", event.url).text("link");
+                var eventOccur = moment(event.datetime_local);
+                var eventDate = eventOccur.format('MMM Do YY');
+                var eventTime = eventOccur.format("hh:mm");
+                $("#listing").append("<tr>", eventName, "<td>" + eventDate,"<td>" + eventTime, eventURL);
             }
 
 
