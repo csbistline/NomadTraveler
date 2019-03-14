@@ -18,14 +18,39 @@ $(document).ready(function () {
             for (var i = 0; i < eventList.length; i++) {
                 //place to store event
                 var event = eventList[i];
-                var eventName = $("<td>").text(event.title);
-                var eventURL = $("<a>").attr("href", event.url).text("link");
+                var eventName = event.title;
                 var eventOccur = moment(event.datetime_local);
                 var eventDate = eventOccur.format('MMM Do YYYY');
                 var eventTime = eventOccur.format("hh:mm A");
-                $("#listing").append("<tr>", eventName, "<td>" + eventDate,"<td>" + eventTime, eventURL);
-            }
+                var eventURL = $("<a target= '_blank'>").attr("href", event.venue.url).text("Link");
+                
+                console.log(eventURL)
 
+                var eventObject = {
+                "event": eventName,
+                "event_date": eventDate,
+                "event_time": eventTime,
+                "event_link": eventURL
+                }
+
+                // make it a string to be added to select link
+                var eventObject = JSON.stringify(eventObject);
+                var addLink = $("<a>");
+                addLink.text("Add event");
+                addLink.attr("data-save", eventObject);
+                addLink.attr("href", "#");
+                addLink.addClass("select-event badge badge-primary");
+
+                // create row to append to table
+                var eventRow = $("<tr>").append(
+                $("<td>").text(eventName), 
+                $("<td>").text(eventDate), 
+                $("<td>").text(eventTime),      
+                $("<td>").html(eventURL),
+                $("<td>").html(addLink), 
+                );
+            $("#listing").append(eventRow);
+            }
 
 
         })
