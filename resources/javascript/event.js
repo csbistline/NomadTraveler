@@ -12,6 +12,7 @@ $(document).ready(function () {
         }).then(function (response) {
             console.log(response);
 
+
             var eventList = response.events;
 
             // Looping through the array of events
