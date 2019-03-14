@@ -30,44 +30,46 @@
 </head>
 
 <body>
+
   <body background="resources/images/aircraft-airplane-aviation-333525-b.jpg">
-  <div class="container">
-    <h1>What would like to do?</h1>
+    <div class="container">
+      <h1>What would like to do?</h1>
 
-    <form id="event-form">
-      <label for="city-input">
-        <h2>Search for activities.</h2>
-      </label>
-      <br>
-      <input class="form control" type="text" id="city-input" placeholder="Type city, then hit search.">
+      <form id="event-form">
+        <label for="city-input">
+          <h2>Search for activities.</h2>
+        </label>
+        <br>
+        <input class="form control" type="text" id="city-input" placeholder="Type city, then hit search.">
 
 
-      <!-- Button triggers event search -->
-      <button class="btn btn-secondary btn-lg" id="run-search" type="search">Event Search</button>
-    </form>
-  </div>
-  <div class="container">
-    <!-- Events will be displayed here -->
-    <div class="card  mb-4 event" id="event-display">
-      <h2 class="card-title"> Events in the city:</h2>
+        <!-- Button triggers event search -->
+        <button class="btn btn-secondary btn-lg" id="run-search" type="search">Event Search</button>
+      </form>
+    </div>
+    <div class="container">
+      <!-- Events will be displayed here -->
+      <div class="card  mb-4 event" id="event-display">
+        <h2 class="card-title"> Events in the city:</h2>
         <div class="card-body" id="event-body">
           <table class="table table-sm table-hover" id='flight-sked'>
             <thead>
-                <th scope="col">Event</th>
-                <th scope="col">Date</th>
-                <th scope="col">Time</th>
-                <th scope="col">Link to purchase</th>
-                <th scope="col">Add to profile</th>
-              </thead>
-              <tbody id="listing">
+              <th scope="col">Event</th>
+              <th scope="col">Date</th>
+              <th scope="col">Time</th>
+              <th scope="col">Avg. Price</th>
+              <th scope="col">Link to purchase</th>
+              <th scope="col">Add to profile</th>
+            </thead>
+            <tbody id="listing">
 
-              </tbody>
-
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
-  </div>
 
 
-</body>
+  </body>
 
 </html>
