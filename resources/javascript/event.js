@@ -1,5 +1,5 @@
 $(document).ready(function () {
-
+ 
     $("#run-search").on("click", function (event) {
         //Prevents the page from reloading on form submit.
         event.preventDefault();
