@@ -23,6 +23,7 @@ $(document).ready(function () {
                 var eventOccur = moment(event.datetime_local);
                 var eventDate = eventOccur.format('MMM Do YYYY');
                 var eventTime = eventOccur.format("hh:mm A");
+                var avgPrice = event.stats.average_price;
                 var eventURL = $("<a target= '_blank'>").attr("href", event.venue.url).text("Link");
                 
                 console.log(eventURL)
@@ -31,6 +32,7 @@ $(document).ready(function () {
                 "event": eventName,
                 "event_date": eventDate,
                 "event_time": eventTime,
+                "average_price": avgPrice,
                 "event_link": eventURL
                 }
 
@@ -46,14 +48,23 @@ $(document).ready(function () {
                 var eventRow = $("<tr>").append(
                 $("<td>").text(eventName), 
                 $("<td>").text(eventDate), 
-                $("<td>").text(eventTime),      
+                $("<td>").text(eventTime),
+                $("<td>").text(avgPrice),    
                 $("<td>").html(eventURL),
                 $("<td>").html(addLink), 
                 );
             $("#listing").append(eventRow);
             }
+            function storeEvent(str){
+                var newEvent = JSON.parse(str);
+                database.ref('users/' + userID + '/event/').push(newEvent);
+            }
 
-
+            $(document).on("click", ".select-event", function () {
+                var str = $(this).attr("data-save");
+                console.log(str);
+                storeEvent(str)
+            })
         })
 
     })
