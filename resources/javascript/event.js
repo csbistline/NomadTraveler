@@ -21,8 +21,8 @@ $(document).ready(function () {
                 var eventName = $("<td>").text(event.title);
                 var eventURL = $("<a>").attr("href", event.url).text("link");
                 var eventOccur = moment(event.datetime_local);
-                var eventDate = eventOccur.format('MMM Do YY');
-                var eventTime = eventOccur.format("hh:mm");
+                var eventDate = eventOccur.format('MMM Do YYYY');
+                var eventTime = eventOccur.format("hh:mm A");
                 $("#listing").append("<tr>", eventName, "<td>" + eventDate,"<td>" + eventTime, eventURL);
             }
 
