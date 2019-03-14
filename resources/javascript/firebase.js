@@ -23,7 +23,7 @@ var userId;
           userId = user.uid;
           userName = user.displayName;
           userEmail = user.email;
-          db.ref('users/' + userId).set({
+          db.ref('users/' + userId + '/details/').set({
               uid: userId,
               name: userName,
               email: userEmail
