@@ -6,41 +6,6 @@ $(document).ready(function () {
     // GLOBAL VARIABLES
     // ================================== 
     var tripBudget;
-    var userId;
-
-    // Initialize Firebase
-    // var config = {
-    //     apiKey: "AIzaSyC4jU3Rp6zvHA7Srnzj9ueT2rD6dbwMuVo",
-    //     authDomain: "testproject-1abc2.firebaseapp.com",
-    //     databaseURL: "https://testproject-1abc2.firebaseio.com",
-    //     projectId: "testproject-1abc2",
-    //     storageBucket: "testproject-1abc2.appspot.com",
-    //     messagingSenderId: "463399312243"
-    // };
-    // firebase.initializeApp(config);
-    var db = app_firebase.database();
-
-    // create a directory for the user
-    app_firebase.auth().onAuthStateChanged(function (user) {
-        if (user) {
-            // User is signed in.
-            console.log(user);
-            userId = user.uid;
-            userName = user.displayName;
-            userEmail = user.email;
-            db.ref('users/' + userId).set({
-                uid: userId,
-                name: userName,
-                email: userEmail
-                //   email: email
-                //some more user data
-            });
-        } else {
-            // No user is signed in.
-        }
-      });
-
-
 
 // ==================================
 // OBJECTS
@@ -171,6 +136,8 @@ function lookupCarrier(ID, carriers) {
 
 // store flight to firebase
 function storeFlight(str) {
+    console.log("storing flight to user", userId);
+    
     var newFlight = JSON.parse(str);
     db.ref('users/' + userId + '/flights/').push(newFlight);
 };
