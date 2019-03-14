@@ -80,10 +80,11 @@ function createItin(result) {
 
         // create object of flight record
         var flightObject = {
-            "origin": currentQuote.OutboundLeg.OriginId,
-            "destination": currentQuote.OutboundLeg.DestinationId,
-            "date": dDates[0],
-            "time": dDates[1],
+            "origin": departCity,
+            "destination": arriveCity,
+            "date": departDate,
+            "time": departTime,
+            "airline": airline.Name,
             "price": flightPrice,
             "budget": tripBudget
         };

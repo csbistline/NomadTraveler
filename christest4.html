@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Nomad Traveler</title>
+    <!--site icon-->
+    <link rel="icon" href="resources/images/favicon.ico">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- font awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+        integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <!--styling-->
+    <link rel="stylesheet" href="resources/styles/beginning.css">
+    <link rel="stylesheet" href="resources/styles/airports.css">
+
+    <!-- Firebase Reference -->
+    <script src="https://www.gstatic.com/firebasejs/4.12.0/firebase.js"></script>
+
+    <!-- Moment.js Reference -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.23/moment-timezone.min.js"></script>
+
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>Nomad Traveler</h1>
+        </header>
+    </div>
+
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-12">
+
+                <!-- Flight sked -->
+                <div class="card mb-4">
+                    <div class="card-header font-weight-bold h3" id="flight-cities">Saved Flights</div>
+                    <div class="card-body" id="flight-results">
+                        <table class="table table-sm table-dark" id='flight-sked'>
+                            <thead>
+                                <tr>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Depart</th>
+                                    <th scope="col">Airline</th>
+                                    <th scope="col">Price</th>
+                                    <th scope="col">Select</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.16.1/lodash.min.js"></script> F
+    <script src="https://unpkg.com/fuse.js@2.5.0/src/fuse.min.js"></script>
+
+    <!--Project Javascript-->
+    <script src="resources/javascript/app.js"></script>
+    <script src="resources/javascript/firebase.js"></script>
+    <script src="https://screenfeedcontent.blob.core.windows.net/html/airports.js"></script>
+    <script src="resources/javascript/findairport.js"></script>
+    <script src="resources/javascript/testing.js"></script>
+</body>
+
+</html>
