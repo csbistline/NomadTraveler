@@ -6,6 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Nomad Traveler</title>
+    <!-- firebase -->
+    <script src="https://www.gstatic.com/firebasejs/5.8.6/firebase.js"></script>
+    <script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
     <!--site icon-->
     <link rel="icon" href="resources/images/favicon.ico">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -17,8 +21,8 @@
     <link rel="stylesheet" href="resources/styles/beginning.css">
     <link rel="stylesheet" href="resources/styles/airports.css">
 
-    <!-- Firebase Reference -->
-    <script src="https://www.gstatic.com/firebasejs/4.12.0/firebase.js"></script>
+    <!-- Firebase Reference
+    <script src="https://www.gstatic.com/firebasejs/4.12.0/firebase.js"></script> -->
 
     <!-- Moment.js Reference -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
@@ -45,8 +49,8 @@
                         <!--Departure Airport-->
                         <label class="control-label" for="depart-city">Depart From</label>
                         <span class="glyphicon glyphicon-map-marker"></span>
-                        <input class="form-control autocomplete"
-                            placeholder="Enter city or airport code" type="text" id="depart-city">
+                        <input class="form-control autocomplete" placeholder="Enter city or airport code" type="text"
+                            id="depart-city">
                     </div>
                     <div class="form-group">
                         <!--Arrival Airport-->
@@ -65,12 +69,16 @@
                     <div class="form-group">
                         <!--Budget--->
                         <label class="control-label" for="budget-amount">Budget</label>
-                        <input type="number" step="100" min="100" class="form-control" id="budget-amount" placeholder="Budget Amount">
+                        <input type="number" step="100" min="100" class="form-control" id="budget-amount"
+                            placeholder="Budget Amount">
                     </div>
 
                     <div class="form-group">
                         <button class="btn btn-secondary btn-lg btn-block" id="search-date-btn" style="color:black">Find
                             Flight</button>
+                        <br>
+                        <br>
+                        <button onclick="db.logOut()" class="btn btn-primary btn-dark">Log-Out</button>
                     </div>
                 </form>
             </div>
@@ -91,7 +99,8 @@
                                     <th scope="col">Airline</th>
                                     <th scope="col">Price</th>
                                     <th scope="col">Select</th>
-                                    <th scope="col"><input id="nextPage" type = "button" onClick="location.href='eventSearch.html'" value = "Next Page"></th>
+                                    <th scope="col"><input id="nextPage" type="button"
+                                            onClick="location.href='eventSearch.html'" value="Next Page"></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -117,8 +126,8 @@
 
 
     <!--Project Javascript-->
-    <script src="resources/javascript/app.js"></script>
     <script src="resources/javascript/firebase.js"></script>
+    <script src="resources/javascript/app.js"></script>
     <script src="https://screenfeedcontent.blob.core.windows.net/html/airports.js"></script>
     <script src="resources/javascript/findairport.js"></script>
 

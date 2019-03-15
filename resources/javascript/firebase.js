@@ -1,6 +1,4 @@
-var app_firebase = {};
 var db = {};
-var userId;
 
 (function () {
   var config = {
@@ -14,10 +12,13 @@ var userId;
   firebase.initializeApp(config);
   app_firebase = firebase;
   db = app_firebase.database();
-})()
+})();
+
+
+(function(){
 
     // create a directory for the user
-    app_firebase.auth().onAuthStateChanged(function (user) {
+    firebase.auth().onAuthStateChanged(function (user) {
       if (user) {
           // User is signed in.
           userId = user.uid;
@@ -27,8 +28,21 @@ var userId;
               uid: userId,
               name: userName,
               email: userEmail
-          });
+          })
       } else {
+        // redirect back to logIn page
+        userId = null;
+
+        window.location.replace("index.html");
+        console.log("logOUt");
+        
           // No user is signed in.
       }
     });
+    // logOut function
+function logOut() {
+  firebase.auth().signOut();
+  console.log("signOUt");
+}
+db.logOut = logOut;
+})();

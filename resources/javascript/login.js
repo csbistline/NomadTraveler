@@ -29,7 +29,7 @@ var uiConfig = {
     // firebase.auth.PhoneAuthProvider.PROVIDER_ID
   ],
   // Terms of service url.
-  tosUrl: '<landing.html',
+  tosUrl: '',
   // Privacy policy url.
   privacyPolicyUrl: '<your-privacy-policy-url>'
 };
@@ -40,7 +40,7 @@ ui.start('#firebaseui-auth-container', uiConfig);
 // console.log(userId);
 
 
-})()
+})();
 
 
 
