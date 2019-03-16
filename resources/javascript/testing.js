@@ -1,12 +1,11 @@
-var userId = "0Ctx4jd7qyfVdh11yKmmyAkU2Lm2"
-// var userId;
+// var userId = "0Ctx4jd7qyfVdh11yKmmyAkU2Lm2"
+var userId;
 
-// app_firebase.auth().onAuthStateChanged(function (user) {
-//         // User is signed in.
-//         userId = user.uid;
-// })
-
-console.log(userId);
+(function () {
+app_firebase.auth().onAuthStateChanged(function (user) {
+        // User is signed in.
+        userId = user.uid;
+        console.log(userId);
 // console.log(db);
 var flights = [];
 var flightRef;
@@ -50,12 +49,16 @@ userRef.on("child_added", function (snapshot) {
     })
 });
 
+        
+})
+})();
+
+
 $(document).on("click", ".remove-flight", function () {
     var fKey = $(this).attr("data-flight");
     var fDelete = db.ref('/users/' + userId + '/flights/');
     console.log(fDelete);
     console.log(fKey);
-    debugger;
     fDelete.child(fKey).remove();
-    location.reload(forceGet)
+    location.reload();
 });
