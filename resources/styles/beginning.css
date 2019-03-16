@@ -27,3 +27,12 @@ h1 {
     background-color: whitesmoke;
     color: black;
 }
+
+.select-flight:active{
+    background-color: blue;
+}
+
+.select-event:active{
+    background-color: blue;
+
+}
