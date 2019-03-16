@@ -48,6 +48,7 @@ $(document).on("click", ".remove-flight", function () {
     var fDelete = db.ref('/users/' + userId + '/flights/');
     console.log(fDelete);
     console.log(fKey);
+    debugger;
     fDelete.child(fKey).remove();
     location.reload(forceGet)
 });
