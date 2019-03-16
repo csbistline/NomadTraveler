@@ -1,4 +1,11 @@
-// var userId = "0Ctx4jd7qyfVdh11yKmmyAkU2Lm2"
+var userId = "0Ctx4jd7qyfVdh11yKmmyAkU2Lm2"
+// var userId;
+
+// app_firebase.auth().onAuthStateChanged(function (user) {
+//         // User is signed in.
+//         userId = user.uid;
+// })
+
 console.log(userId);
 // console.log(db);
 var flights = [];
