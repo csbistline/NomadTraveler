@@ -1,4 +1,6 @@
+var app_firebase = {};
 var db = {};
+var userId;
 
 (function () {
   var config = {
