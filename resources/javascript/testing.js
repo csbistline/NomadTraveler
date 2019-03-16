@@ -1,4 +1,4 @@
-var userId = "0Ctx4jd7qyfVdh11yKmmyAkU2Lm2"
+// var userId = "0Ctx4jd7qyfVdh11yKmmyAkU2Lm2"
 console.log(userId);
 // console.log(db);
 var flights = [];
