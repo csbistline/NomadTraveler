@@ -42,6 +42,11 @@ footer{
     color:red;
     text-align: center;
 }
+h1 {
+    color:whitesmoke;
+    font-family: 'Alfa Slab One', cursive;
+
+}
 
 
 #flight-results {
