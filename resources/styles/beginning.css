@@ -1,22 +1,57 @@
-body {
-    background: no-repeat center url("../images/aircraft-airplane-aviation-333525.jpg");
+.navbar-inverse .navbar-nav .active a, 
+.navbar-inverse .navbar-nav .active a:focus, 
+.navbar-inverse .navbar-nav .active a:hover {
+  color: lightblue;
+  background: rgb(0,89, 255, .1);
+}
+.navbar-inverse .mavbar-nav li a {
+  color: grey;
+}
+.navbar-brand img{
+    max-width: 50px;
+  }
 
+body {
+    background:url("../images/back2.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: auto;
+    margin:0px;
+    padding:0px; 
+}
+#flight-options{
+    color:whitesmoke;
+    text-align: center;
+    font-family: 'Alfa Slab One', cursive;
+    border:goldenrod;
+
+    border-radius: 5px;
+}
+.maincontainer {
+    background-color:rgb(255, 204, 64, .7);
+    border-radius: 40px;    
 }
 
-.container {
-    background-color: whitesmoke;
+.card{
+    color:black;
+    background:rgb(255, 204, 64, .3);
+    border-radius: 5px;
+}
+footer{
+    color:red;
+    text-align: center;
 }
 
 
 #flight-results {
-    background-color: whitesmoke;
+    background-color:rgb(177, 175, 172);
     color: black;
 
 }
-
-h1 {
-    font-weight: bolder;
-    text-align: center;
+#event-question {
+    color:whitesmoke;
+    font-family: 'Alfa Slab One', cursive;
 }
 
 .btn {

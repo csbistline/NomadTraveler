@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
         integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <!-- font awesome -->
+    <link href="https://fonts.googleapis.com/css?family=Alfa+Slab+One" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
         integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <!--styling-->
@@ -27,14 +28,42 @@
 </head>
 
 <body>
+        <nav class="navbar navbar-inverse">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapase" data-target="#myNavbar">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="#"><img src="resources/images/nomad.jpg"></a>
+                    </div>
+                    <div class="collapse navbar-collapse" id="myNavbar">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="active"><a href="index.html">Log-In</a></li>
+                            <li><a href="landing.html" class="button bar-item">Flights</a></li>
+                            <li><a href="eventSearch.html" class="button wbar-item">Events</a></li>
+        
+                        </ul>
+                    </div>
+        
+        
+                </div>
+                </div>
+        
+            </nav>
+    <br>
+    <br>
+    <div id="flight-options"class="container">
 
-    <div class="container">
         <header>
             <h1>Nomad Traveler</h1>
         </header>
     </div>
-
-    <div class="container">
+    <br>
+    <br>
+    <br>
+    <div id="maincontainer" class="container">
         <div class="card">
             <div class="card-header font-weight-bold">
                 <h3>Flight Options</h3>
@@ -69,7 +98,7 @@
                     </div>
 
                     <div class="form-group">
-                        <button class="btn btn-secondary btn-lg btn-block" id="search-date-btn" style="color:black">Find
+                        <button type="submit" class="btn btn-primary btn-dark" id="search-date-btn" style="color:black">Find
                             Flight</button>
                     </div>
                 </form>
@@ -91,7 +120,7 @@
                                     <th scope="col">Airline</th>
                                     <th scope="col">Price</th>
                                     <th scope="col">Select</th>
-                                    <th scope="col"><input id="nextPage" type = "button" onClick="location.href='eventSearch.html'" value = "Next Page"></th>
+                                    <th scope="col"><input id="nextPage" type = "button" class="btn btn-primary btn-dark" onClick="location.href='eventSearch.html'" value = "Next Page"></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -103,6 +132,9 @@
         </div>
 
     </div>
+    <footer>
+            <div id="copyright">&copy;2019 NomadTraveler Vanderbilt BCS</div>
+          </footer>
 
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
