@@ -99,3 +99,12 @@ $(document).on("click", ".remove-flight", function () {
     fDelete.child(fKey).remove();
     location.reload();
 });
+
+$(document).on("click", ".remove-event", function () {
+    var eKey = $(this).attr("data-event");
+    var eDelete = db.ref('/users/' + userId + '/event/');
+    console.log(eDelete);
+    console.log(eKey);
+    eDelete.child(eKey).remove();
+    location.reload();
+});
