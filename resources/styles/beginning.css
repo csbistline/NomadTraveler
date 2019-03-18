@@ -51,7 +51,8 @@ h1 {
 }
 
 
-#flight-results {
+#flight-results, 
+#event-results {
     background-color:rgb(177, 175, 172);
     color: black;
 
@@ -77,4 +78,12 @@ h1 {
 .select-event:active{
     background-color: blue;
 
+}
+
+h3 {
+    color: white;
+}
+
+.card-header {
+    color: white;
 }
