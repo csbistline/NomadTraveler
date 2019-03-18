@@ -23,7 +23,7 @@ body {
 #flight-options{
     color:whitesmoke;
     text-align: center;
-    font-family: 'Alfa Slab One', cursive;
+    /* font-family: 'Alfa Slab One', cursive; */
     border:goldenrod;
 
     border-radius: 5px;
@@ -37,14 +37,16 @@ body {
     color:black;
     background:rgb(255, 204, 64, .3);
     border-radius: 5px;
+    padding: 5px;
 }
 footer{
-    color:red;
+    color: white;
     text-align: center;
 }
 h1 {
     color:whitesmoke;
     font-family: 'Alfa Slab One', cursive;
+    text-align: center;
 
 }
 
@@ -55,13 +57,13 @@ h1 {
 
 }
 #event-question {
-    color:whitesmoke;
-    font-family: 'Alfa Slab One', cursive;
+    /* color:whitesmoke; */
+    /* font-family: 'Alfa Slab One', cursive; */
 }
 
-.btn {
+/* .btn {
     color: navy;
-}
+} */
 
 #event-display {
     background-color: whitesmoke;

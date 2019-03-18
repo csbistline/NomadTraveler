@@ -42,7 +42,7 @@
                     <li class="active"><a href="index.html">Log-In</a></li>
                     <li><a href="landing.html" class="button bar-item">Flights</a></li>
                     <li><a href="eventSearch.html" class="button wbar-item">Events</a></li>
-                    <li><a href="christest4.html" class="button wbar-item">Trips</a></li>
+                    <li><a href="results.html" class="button wbar-item">Trips</a></li>
 
                 </ul>
             </div>
@@ -63,14 +63,14 @@
 
       <form id="event-form">
         <label for="city-input">
-          <h2>Search for activities.</h2>
+          <h2 style="color: white">Search for activities</h2>
         </label>
         <br>
         <input class="form control" type="text" id="city-input" id="autocomplete" placeholder="Type city, then hit search.">
 
 
         <!-- Button triggers event search -->
-        <button id="run-search" type="submit" class="btn btn-primary btn-dark">Event Search</button>
+        <button id="run-search" type="submit" class="btn btn-primary">Event Search</button>
       </form>
     </div>
     <div class="container">
@@ -86,13 +86,14 @@
               <th scope="col">Avg. Price</th>
               <th scope="col">Link to purchase</th>
               <th scope="col">Add to profile</th>
-            <th scope="col"><input id="nextPage" type="button" onClick="location.href='christest4.html'" value="Next Page"></th>
             </thead>
             <tbody id="listing">
 
             </tbody>
           </table>
         </div>
+        <input id="nextPage" type="button" onClick="location.href='results.html'" value="Next Page"></th>
+
       </div>
     </div>
     <!-- The Modal -->

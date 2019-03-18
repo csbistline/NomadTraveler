@@ -1,4 +1,5 @@
 (function(){
+  // something is wrong with this line
 var ui = new firebaseui.auth.AuthUI(firebase.auth());
 console.log("ui", ui);
 

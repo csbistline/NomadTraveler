@@ -1,5 +1,5 @@
-var userId = "0Ctx4jd7qyfVdh11yKmmyAkU2Lm2"
-var userId;
+// var userId = "0Ctx4jd7qyfVdh11yKmmyAkU2Lm2"
+// var userId;
 
 (function () {
 app_firebase.auth().onAuthStateChanged(function (user) {
