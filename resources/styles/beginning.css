@@ -1,5 +1,5 @@
-.navbar-inverse .navbar-nav .active a, 
-.navbar-inverse .navbar-nav .active a:focus, 
+.navbar-inverse .navbar-nav .active a,
+.navbar-inverse .navbar-nav .active a:focus,
 .navbar-inverse .navbar-nav .active a:hover {
   color: lightblue;
   background: rgb(0,89, 255, .1);
@@ -12,13 +12,13 @@
   }
 
 body {
-    background:url("../images/back2.jpg");
+    background:url("../images/aircraft-airplane-aviation-333525-b.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
     background-position: auto;
     margin:0px;
-    padding:0px; 
+    padding:0px;
 }
 #flight-options{
     color:whitesmoke;
@@ -30,7 +30,7 @@ body {
 }
 .maincontainer {
     background-color:rgb(255, 204, 64, .7);
-    border-radius: 40px;    
+    border-radius: 40px;
 }
 
 .card{
@@ -51,7 +51,7 @@ h1 {
 }
 
 
-#flight-results, 
+#flight-results,
 #event-results {
     background-color:rgb(177, 175, 172);
     color: black;
@@ -62,9 +62,9 @@ h1 {
     /* font-family: 'Alfa Slab One', cursive; */
 }
 
-/* .btn {
-    color: navy;
-} */
+button {
+    float: right
+}
 
 #event-display {
     background-color: whitesmoke;
